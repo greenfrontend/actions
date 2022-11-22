@@ -8,4 +8,4 @@ jobs:
       - name: ls
         run: ls -lah
       - name: try to read file without checkout
-        run: echo README.md
+        run: cat README.md
