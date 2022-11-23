@@ -1,5 +1,7 @@
 name: Context testing
-on: [push, workflow_dispatch]
+on:
+  pull_request:
+    types: [opened]
 
 jobs:
   dump_contexts_to_log:
@@ -12,8 +14,11 @@ jobs:
       - name: try to read file without checkout
         run: cat README.md
   another_job:
-    needs: dump_contexts_to_log
+    # needs: dump_contexts_to_log
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
       - name: sleep
-        run: sleep 20
+        run: sleep 2
