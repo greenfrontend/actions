@@ -17,8 +17,10 @@ jobs:
     # needs: dump_contexts_to_log
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github) }}'
-      - name: sleep
-        run: sleep 2
+      - name: produce artifact
+        run: echo '${{ toJSON(github) }}' > path/to/artifact/world.txt
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: path/to/artifact/world.txt
