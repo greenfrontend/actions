@@ -18,7 +18,7 @@ jobs:
 
       - name: set output
         id: step
-        run: echo 'hello world' >> $GITHUB_OUTPUT
+        run: echo 'hello' >> $GITHUB_OUTPUT
 
   second:
     runs-on: ubuntu-latest
