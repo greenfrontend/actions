@@ -2,25 +2,37 @@ name: Context testing
 on: push
 
 jobs:
-  dump_contexts_to_log:
+  first:
     runs-on: ubuntu-latest
     steps:
-      - name: get code
-        uses: actions/checkout@v3
-      - name: check node version
-        run: node -v
-      - name: try to read file without checkout
-        run: cat README.md
-  another_job:
-    # needs: dump_contexts_to_log
+      - name: generate file
+        run: echo 'content' > file.txt
+  second:
     runs-on: ubuntu-latest
     steps:
-      - name: prepare folder and file
-        run: |
-          mkdir -p path/to/artifact
-          echo '${{ toJSON(github) }}' > path/to/artifact/world.txt
-      - name: upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact
-          path: path/to/artifact/world.txt
+      - name: read previous file
+        run: cat file.txt
+
+# jobs:
+#   dump_contexts_to_log:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: get code
+#         uses: actions/checkout@v3
+#       - name: check node version
+#         run: node -v
+#       - name: try to read file without checkout
+#         run: cat README.md
+#   another_job:
+#     # needs: dump_contexts_to_log
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: prepare folder and file
+#         run: |
+#           mkdir -p path/to/artifact
+#           echo '${{ toJSON(github) }}' > path/to/artifact/world.txt
+#       - name: upload artifact
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: my-artifact
+#           path: path/to/artifact/world.txt
