@@ -4,8 +4,6 @@ on: push
 jobs:
   first:
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.step.outputs.test }}
     steps:
       - name: generate file
         run: echo 'content' > file.txt
