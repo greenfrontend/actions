@@ -9,6 +9,7 @@ jobs:
         run: echo 'content' > file.txt
   second:
     runs-on: ubuntu-latest
+    needs: first
     steps:
       - name: read previous file
         run: cat file.txt
