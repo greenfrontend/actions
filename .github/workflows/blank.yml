@@ -1,59 +1,13 @@
-name: Context testing
+name: Some Workflow
 on: push
+
+env:
+  VARIABLE: value
 
 jobs:
   first:
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.step.outputs.test }}
+
     steps:
-      - name: generate file
-        run: echo 'content' > file.txt
-
-      - name: upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact
-          path: file.txt
-
-      - name: set output
-        id: step
-        run: echo 'test=hello' >> $GITHUB_OUTPUT
-
-  second:
-    runs-on: ubuntu-latest
-    needs: first
-    steps:
-      - name: download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: my-artifact
-
-      - name: read previous file
-        run: cat file.txt
-
-      - name: show output
-        run: echo ${{ needs.first.outputs.output1 }}
-# jobs:
-#   dump_contexts_to_log:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: get code
-#         uses: actions/checkout@v3
-#       - name: check node version
-#         run: node -v
-#       - name: try to read file without checkout
-#         run: cat README.md
-#   another_job:
-#     # needs: dump_contexts_to_log
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: prepare folder and file
-#         run: |
-#           mkdir -p path/to/artifact
-#           echo '${{ toJSON(github) }}' > path/to/artifact/world.txt
-#       - name: upload artifact
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: my-artifact
-#           path: path/to/artifact/world.txt
+      - name: output env
+        run: ruby -e "puts ENV['PATH']"
