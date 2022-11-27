@@ -1,24 +1,24 @@
-name: Context testing
-on:
-  pull_request:
-    types: [opened]
+name: Some Workflow
+on: push
+
+env:
+  VARIABLE: value
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
 
 jobs:
-  dump_contexts_to_log:
+  first:
     runs-on: ubuntu-latest
+
     steps:
-      - name: get code
-        uses: actions/checkout@v3
-      - name: check node version
-        run: node -v
-      - name: try to read file without checkout
-        run: cat README.md
-  another_job:
-    # needs: dump_contexts_to_log
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github) }}'
-      - name: sleep
-        run: sleep 2
+      - uses: actions/github-script@v6
+        id: ci-job-token
+        with:
+          script: |
+            const token = process.env['ACTIONS_RUNTIME_TOKEN']
+            const runtimeUrl = process.env['ACTIONS_ID_TOKEN_REQUEST_URL']
+            console.log({ token, runtimeUrl })
+
