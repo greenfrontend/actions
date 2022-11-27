@@ -9,7 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: View context attributes
-        uses: actions/github-script@v6
+      - uses: actions/github-script@v6
+        id: ci-job-token
         with:
-          script: console.log(process.env)
+          script: |
+            const token = process.env['ACTIONS_RUNTIME_TOKEN']
+            const runtimeUrl = process.env['ACTIONS_ID_TOKEN_REQUEST_URL']
+            console.log({ token, runtimeUrl })
+
