@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: output env
-        run: ruby -e "puts ENV['PATH']"
-      - name: output other env
-        run: ruby -e "puts ENV['VARIABLE']"
+      - name: View context attributes
+        uses: actions/github-script@v6
+        with:
+          script: console.log(process.env)
