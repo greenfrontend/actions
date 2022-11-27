@@ -4,6 +4,11 @@ on: push
 env:
   VARIABLE: value
 
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+
 jobs:
   first:
     runs-on: ubuntu-latest
